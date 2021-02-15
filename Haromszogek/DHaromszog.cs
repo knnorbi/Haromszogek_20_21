@@ -118,5 +118,10 @@ namespace Haromszogek
                 return aOldal <= bOldal && bOldal <= cOldal;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{SorSzama}. sor: a={a} b={b} c={c}";
+        }
     }
 }

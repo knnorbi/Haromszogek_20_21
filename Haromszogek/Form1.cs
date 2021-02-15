@@ -16,6 +16,7 @@ namespace Haromszogek
         public Form1()
         {
             InitializeComponent();
+            hibaLb.Text = string.Empty;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -28,11 +29,29 @@ namespace Haromszogek
                 int sorSzam = 1;
                 while ((sor = streamReader.ReadLine()) != null)
                 {
-                    haromszogek.Items.Add(new DHaromszog(sor, sorSzam));
+                    try
+                    {
+                        haromszogek.Items.Add(new DHaromszog(sor, sorSzam));
+                    }
+                    catch (Exception exept)
+                    {
+                        hibaLb.Text += sorSzam + ".sor: " + exept.Message + "\n";
+                    }
                     sorSzam++;
                 }
                 streamReader.Close();
             }
+        }
+
+        private void haromszogek_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DHaromszog h = haromszogek.SelectedItem as DHaromszog;
+            if (h == null)
+            {
+                return;
+            }
+            label1.Text = h.Kerulet.ToString();
+            label2.Text = h.Terulet.ToString();
         }
     }
 }
